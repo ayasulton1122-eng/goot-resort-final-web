@@ -1,0 +1,92 @@
+﻿<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>GOOT Admin | لوحة الإدارة</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&family=Amiri&display=swap" rel="stylesheet">
+  
+
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <header>
+    <div class="brand">GOOT <b>ADMIN</b></div>
+    <div class="actions">
+      <button class="btn" id="btn-refresh">REFRESH ↻</button>
+      <a class="btn" href="/api/admin/export/customers.csv" id="exp-csv" download>EXPORT CUSTOMERS CSV</a>
+      <a class="btn" href="/api/admin/export/bookings.csv" id="exp-csv2" download>EXPORT BOOKINGS CSV</a>
+      <a class="btn" href="/">← WEBSITE</a>
+      <button class="btn is-hidden" id="btn-logout">LOGOUT</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- LOGIN -->
+    <div class="login login-premium" id="login-view">
+  <div class="login-logo">
+    <img src="assets/favicon.svg" alt="GOOT Resorts">
+  </div>
+
+  <div class="login-brand">GOOT <span>RESORTS</span></div>
+  <div class="login-kicker">PRIVATE ADMINISTRATION</div>
+
+  <h1>Welcome Back</h1>
+
+  <p>
+    Secure access to the GOOT Resorts management dashboard.
+  </p>
+
+  <label for="key-input">ADMIN KEY</label>
+
+  <input
+    type="password"
+    id="key-input"
+    placeholder="Enter your admin key"
+    autocomplete="current-password"
+  >
+
+  <button class="btn primary login-button" id="btn-login" type="button">
+    LOGIN
+  </button>
+
+  <div class="msg" id="login-msg"></div>
+</div>
+
+<!-- DASHBOARD -->
+    <div id="dash-view" class="is-hidden">
+      <div class="stats">
+        <div class="stat"><b id="st-customers">—</b><small>عملاء مسجلون</small></div>
+        <div class="stat"><b id="st-bookings">—</b><small>إجمالي الحجوزات</small></div>
+        <div class="stat"><b id="st-pending">—</b><small>طلبات معلّقة</small></div>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-view="customers">العملاء</button>
+        <button class="tab" data-view="bookings">الحجوزات</button>
+      </div>
+      <div class="toolbar">
+        <input id="search" placeholder="بحث بالاسم أو البريد أو الهاتف…">
+      </div>
+      <div id="table-wrap"></div>
+      <div id="charts" class="chart-wrap">
+        <canvas id="chart-revenue"></canvas>
+        <p>إيرادات كل فيلا (SAR) مقابل الضيوف — معلّقة Stonesville /ـكم</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>GOOT Resorts — PRIVATE ADMIN DASHBOARD</span>
+    <span id="api-connection">الاتصال بالـ API: <b id="api-status">جارٍ الفحص…</b></span>
+  </footer>
+
+  <script src="js/admin.js?v=2" defer></script>
+</body>
+</html>
+
+
+

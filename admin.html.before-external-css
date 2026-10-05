@@ -1,0 +1,609 @@
+﻿<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>GOOT Admin | لوحة الإدارة</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&family=Amiri&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --bg:#070806;
+  --panel:#10120f;
+  --panel2:#151813;
+  --text:#f4f0e6;
+  --muted:#9b9b91;
+  --gold:#c9ad72;
+  --gold2:#ead8aa;
+  --line:rgba(255,255,255,.09);
+  --ok:#83d39d;
+  --err:#e58f82;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 0%,rgba(201,173,114,.10),transparent 32%),
+    radial-gradient(circle at 90% 20%,rgba(255,255,255,.035),transparent 28%),
+    linear-gradient(135deg,#070806,#0b0d0a 55%,#070806);
+  font-family:"DM Sans",Arial,sans-serif;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:100% 4px;
+  opacity:.25;
+}
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:20px 5vw;
+  border-bottom:1px solid var(--line);
+  background:rgba(7,8,6,.82);
+  backdrop-filter:blur(18px);
+}
+.brand{
+  font-family:"Playfair Display",serif;
+  font-size:24px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.brand b{color:var(--gold);font-weight:600}
+header .actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+button,input{font:inherit}
+.btn{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.025);
+  color:var(--text);
+  padding:10px 15px;
+  border-radius:4px;
+  cursor:pointer;
+  transition:.25s ease;
+}
+.btn:hover{
+  border-color:rgba(201,173,114,.55);
+  color:var(--gold2);
+  transform:translateY(-1px);
+}
+main{
+  width:min(1400px,90vw);
+  margin:0 auto;
+  padding:58px 0 80px;
+}
+#login-view{
+  min-height:70vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.login-card{
+  width:min(500px,100%);
+  padding:48px;
+  border:1px solid rgba(201,173,114,.22);
+  background:linear-gradient(145deg,rgba(21,24,19,.96),rgba(10,12,9,.96));
+  box-shadow:0 30px 90px rgba(0,0,0,.45);
+}
+.login-card h1{
+  margin:0 0 12px;
+  font-family:"Playfair Display",serif;
+  font-size:38px;
+}
+.login-card p{color:var(--muted);line-height:1.8}
+input{
+  width:100%;
+  border:1px solid var(--line);
+  background:#090b08;
+  color:var(--text);
+  padding:14px;
+  border-radius:4px;
+  outline:none;
+}
+input:focus{border-color:var(--gold)}
+#btn-login{
+  width:100%;
+  margin-top:14px;
+  background:var(--gold);
+  color:#111;
+  border:0;
+  padding:14px;
+  font-weight:700;
+}
+#dash-view{animation:fadeIn .5s ease}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+.hero{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:30px;
+  margin-bottom:38px;
+}
+.hero h1{
+  margin:0;
+  font-family:"Playfair Display",serif;
+  font-size:clamp(36px,5vw,68px);
+  font-weight:500;
+}
+.hero p{color:var(--muted);margin:10px 0 0}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  margin-bottom:28px;
+}
+.stat{
+  position:relative;
+  overflow:hidden;
+  padding:25px;
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,var(--panel2),var(--panel));
+}
+.stat:after{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  right:-45px;
+  top:-45px;
+  border-radius:50%;
+  background:rgba(201,173,114,.08);
+}
+.stat small{
+  display:block;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+.stat strong{
+  font-family:"Playfair Display",serif;
+  font-size:42px;
+  font-weight:500;
+  color:var(--gold2);
+}
+.workspace{
+  border:1px solid var(--line);
+  background:rgba(15,17,13,.88);
+}
+.tabs{
+  display:flex;
+  gap:4px;
+  padding:12px;
+  border-bottom:1px solid var(--line);
+}
+.tab{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:11px 18px;
+  cursor:pointer;
+}
+.tab.active{
+  color:var(--gold2);
+  background:rgba(201,173,114,.09);
+}
+.toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:18px;
+}
+#search{max-width:380px}
+#table-wrap{
+  overflow:auto;
+  border-top:1px solid var(--line);
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:720px;
+}
+th,td{
+  text-align:right;
+  padding:16px 18px;
+  border-bottom:1px solid var(--line);
+}
+th{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+td{color:#e9e6dc}
+tr:hover td{background:rgba(255,255,255,.018)}
+.empty{
+  padding:45px;
+  text-align:center;
+  color:var(--muted);
+}
+#charts{
+  margin-top:28px;
+  padding:24px;
+  border:1px solid var(--line);
+  background:rgba(15,17,13,.8);
+}
+#charts canvas{max-width:100%}
+footer{
+  padding:25px 5vw;
+  color:var(--muted);
+  border-top:1px solid var(--line);
+}
+@media(max-width:800px){
+  header{align-items:flex-start;flex-direction:column}
+  main{width:92vw;padding-top:35px}
+  .hero{align-items:flex-start;flex-direction:column}
+  .stats{grid-template-columns:1fr}
+  .login-card{padding:30px 22px}
+  .toolbar{align-items:stretch;flex-direction:column}
+  #search{max-width:none}
+  .hide-sm{display:none}
+}
+  .login-card{
+  width:min(500px,100%);
+  padding:48px 44px;
+  text-align:center;
+  border:1px solid rgba(201,173,114,.25);
+  background:linear-gradient(145deg,rgba(21,24,19,.97),rgba(8,10,8,.97));
+  box-shadow:0 35px 100px rgba(0,0,0,.55);
+}
+.login-logo{
+  width:82px;
+  height:82px;
+  margin:0 auto 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(201,173,114,.35);
+  border-radius:50%;
+  background:rgba(201,173,114,.06);
+  padding:13px;
+}
+.login-logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.login-brand{
+  font-family:"Playfair Display",serif;
+  font-size:25px;
+  letter-spacing:.22em;
+  color:#f4f0e6;
+}
+.login-brand span{
+  color:var(--gold);
+}
+.login-kicker{
+  margin-top:8px;
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:.22em;
+}
+.login-card h1{
+  margin:30px 0 10px;
+  font-family:"Playfair Display",serif;
+  font-size:38px;
+  font-weight:500;
+}
+.login-description{
+  margin:0 auto 28px;
+  max-width:360px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.login-card label{
+  display:block;
+  margin-bottom:8px;
+  text-align:left;
+  color:var(--muted);
+  font-size:11px;
+  letter-spacing:.12em;
+}
+.login-card input{
+  display:block;
+  width:100%;
+  height:50px;
+}
+.login-button{
+  display:block;
+  width:100%;
+  height:50px;
+  margin-top:14px;
+  background:var(--gold);
+  color:#111;
+  border-color:var(--gold);
+  font-weight:700;
+  letter-spacing:.08em;
+}
+.login-button:hover{
+  background:var(--gold2);
+  color:#111;
+}
+.login-card .msg{
+  min-height:20px;
+  margin-top:14px;
+  color:var(--err);
+  font-size:13px;
+}
+  .login-premium{
+  width:min(500px,92vw);
+  padding:48px 44px;
+  text-align:center;
+  border:1px solid rgba(201,173,114,.28);
+  background:linear-gradient(145deg,rgba(21,24,19,.98),rgba(8,10,8,.98));
+  box-shadow:0 35px 100px rgba(0,0,0,.55);
+}
+
+.login-premium .login-logo{
+  width:82px;
+  height:82px;
+  margin:0 auto 18px;
+  padding:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(201,173,114,.38);
+  border-radius:50%;
+  background:rgba(201,173,114,.06);
+}
+
+.login-premium .login-logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.login-brand{
+  font-family:"Playfair Display",serif;
+  font-size:25px;
+  letter-spacing:.22em;
+}
+
+.login-brand span{
+  color:var(--gold);
+}
+
+.login-kicker{
+  margin-top:8px;
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:.22em;
+}
+
+.login-premium h1{
+  margin:30px 0 10px;
+  font-family:"Playfair Display",serif;
+  font-size:38px;
+  font-weight:500;
+}
+
+.login-premium p{
+  margin:0 auto 28px;
+  max-width:360px;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.login-premium label{
+  display:block;
+  margin-bottom:8px;
+  text-align:left;
+  color:var(--muted);
+  font-size:11px;
+  letter-spacing:.12em;
+}
+
+.login-premium input{
+  display:block;
+  width:100%;
+  height:50px;
+}
+
+.login-premium .login-button{
+  display:block;
+  width:100%;
+  height:50px;
+  margin-top:14px;
+  background:var(--gold);
+  color:#111;
+  border-color:var(--gold);
+  font-weight:700;
+  letter-spacing:.08em;
+}
+
+.login-premium .login-button:hover{
+  background:var(--gold2);
+}
+
+.login-premium .msg{
+  min-height:20px;
+  margin-top:14px;
+}
+/* FINAL LOGIN LAYOUT FIX */
+#login-view.login-premium{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+  justify-content:center !important;
+  gap:0 !important;
+  width:min(520px,92vw) !important;
+  min-height:0 !important;
+  margin:80px auto !important;
+  padding:48px !important;
+  position:relative !important;
+}
+
+#login-view.login-premium > *{
+  flex:none !important;
+  width:100% !important;
+}
+
+#login-view.login-premium .login-logo{
+  width:86px !important;
+  height:86px !important;
+  margin:0 auto 20px !important;
+}
+
+#login-view.login-premium .login-brand{
+  text-align:center !important;
+  margin:0 !important;
+}
+
+#login-view.login-premium .login-kicker{
+  text-align:center !important;
+  margin:8px 0 0 !important;
+}
+
+#login-view.login-premium h1{
+  text-align:center !important;
+  margin:28px 0 12px !important;
+}
+
+#login-view.login-premium p{
+  text-align:center !important;
+  margin:0 auto 28px !important;
+}
+
+#login-view.login-premium label{
+  display:block !important;
+  text-align:left !important;
+  margin:0 0 8px !important;
+}
+
+#login-view.login-premium input{
+  display:block !important;
+  width:100% !important;
+  height:52px !important;
+  margin:0 !important;
+}
+
+#login-view.login-premium #btn-login{
+  display:block !important;
+  width:100% !important;
+  height:52px !important;
+  margin:14px 0 0 !important;
+  position:static !important;
+}
+
+#login-view.login-premium #login-msg{
+  display:block !important;
+  width:100% !important;
+  min-height:20px !important;
+  margin:12px 0 0 !important;
+  text-align:center !important;
+}
+
+@media(max-width:600px){
+  #login-view.login-premium{
+    width:92vw !important;
+    padding:32px 24px !important;
+    margin:45px auto !important;
+  }
+}
+</style>
+<style>
+.is-hidden{
+  display:none !important;
+}
+.api-ok{
+  color:var(--ok) !important;
+}
+.api-error{
+  color:var(--err) !important;
+}
+</style>
+</head>
+<body>
+  <header>
+    <div class="brand">GOOT <b>ADMIN</b></div>
+    <div class="actions">
+      <button class="btn" id="btn-refresh">REFRESH ↻</button>
+      <a class="btn" href="/api/admin/export/customers.csv" id="exp-csv" download>EXPORT CUSTOMERS CSV</a>
+      <a class="btn" href="/api/admin/export/bookings.csv" id="exp-csv2" download>EXPORT BOOKINGS CSV</a>
+      <a class="btn" href="/">← WEBSITE</a>
+      <button class="btn is-hidden" id="btn-logout">LOGOUT</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- LOGIN -->
+    <div class="login login-premium" id="login-view">
+  <div class="login-logo">
+    <img src="assets/favicon.svg" alt="GOOT Resorts">
+  </div>
+
+  <div class="login-brand">GOOT <span>RESORTS</span></div>
+  <div class="login-kicker">PRIVATE ADMINISTRATION</div>
+
+  <h1>Welcome Back</h1>
+
+  <p>
+    Secure access to the GOOT Resorts management dashboard.
+  </p>
+
+  <label for="key-input">ADMIN KEY</label>
+
+  <input
+    type="password"
+    id="key-input"
+    placeholder="Enter your admin key"
+    autocomplete="current-password"
+  >
+
+  <button class="btn primary login-button" id="btn-login" type="button">
+    LOGIN
+  </button>
+
+  <div class="msg" id="login-msg"></div>
+</div>
+
+<!-- DASHBOARD -->
+    <div id="dash-view" class="is-hidden">
+      <div class="stats">
+        <div class="stat"><b id="st-customers">—</b><small>عملاء مسجلون</small></div>
+        <div class="stat"><b id="st-bookings">—</b><small>إجمالي الحجوزات</small></div>
+        <div class="stat"><b id="st-pending">—</b><small>طلبات معلّقة</small></div>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-view="customers">العملاء</button>
+        <button class="tab" data-view="bookings">الحجوزات</button>
+      </div>
+      <div class="toolbar">
+        <input id="search" placeholder="بحث بالاسم أو البريد أو الهاتف…">
+      </div>
+      <div id="table-wrap"></div>
+      <div id="charts" class="chart-wrap">
+        <canvas id="chart-revenue"></canvas>
+        <p>إيرادات كل فيلا (SAR) مقابل الضيوف — معلّقة Stonesville /ـكم</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>GOOT Resorts — PRIVATE ADMIN DASHBOARD</span>
+    <span>الاتصال بالـ API: <b id="api-status">جارٍ الفحص…</b></span>
+  </footer>
+
+  <script src="js/admin.js" defer></script>
+</body>
+</html>
+

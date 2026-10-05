@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>GOOT Admin | لوحة الإدارة</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&family=Amiri&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0b0c0a;--card:#131410;--text:#f1eee4;--muted:rgba(241,238,228,.6);--gold:#c9ad72;--gold2:#e6d2a0;--line:rgba(255,255,255,.1);--ok:#7fce9a;--err:#e18d7f}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;min-height:100vh}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 4vw;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(11,12,10,.92);backdrop-filter:blur(12px);z-index:5}
+    .brand{font-family:"Playfair Display",serif;letter-spacing:.2em;font-size:20px}
+    .brand b{color:var(--gold);font-weight:600}
+    header .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    button,input{font:inherit}
+    .btn{border:1px solid var(--line);background:transparent;color:var(--text);padding:9px 14px;cursor:pointer;font-size:12px;border-radius:3px;transition:.25s}
+    .btn:hover{border-color:var(--gold);color:var(--gold2)}
+    .btn.primary{background:var(--gold);color:#111;border-color:var(--gold);font-weight:600}
+    .btn.primary:hover{background:var(--gold2);color:#111}
+    main{max-width:1200px;margin:auto;padding:28px 4vw 80px}
+    .login{max-width:430px;margin:12vh auto;background:var(--card);border:1px solid var(--line);padding:34px;display:grid;gap:14px}
+    .login h1{font-family:"Playfair Display",serif;font-weight:500;font-size:26px;margin:0 0 6px}
+    .login p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.7}
+    .login input{width:100%;background:#0d0e0b;border:1px solid var(--line);color:var(--text);padding:12px 14px;outline:none}
+    .login input:focus{border-color:rgba(201,173,114,.7)}
+    .login .btn{padding:13px}
+    .msg{min-height:18px;font-size:12px;color:var(--err)}
+    .msg.ok{color:var(--ok)}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0 22px}
+    .stat{background:var(--card);border:1px solid var(--line);padding:20px}
+    .stat b{display:block;font-family:"Playfair Display",serif;font-size:30px;font-weight:500}
+    .stat small{color:var(--muted);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+    .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+    .tab{padding:10px 18px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;font-size:12px}
+    .tab.active{border-color:var(--gold);color:var(--gold2);background:rgba(201,173,114,.08)}
+    .toolbar{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+    .toolbar input{flex:1 1 240px;background:#0d0e0b;border:1px solid var(--line);color:var(--text);padding:10px 13px;outline:none}
+    table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);font-size:13px}
+    th{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:right;padding:13px 14px;border-bottom:1px solid var(--line)}
+    td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top}
+    tr:hover td{background:rgba(201,173,114,.04)}
+    .badge{display:inline-block;padding:3px 9px;font-size:10px;letter-spacing:.08em;border:1px solid var(--line);color:var(--muted)}
+    .badge.confirmed{border-color:rgba(127,206,154,.5);color:var(--ok)}
+    .badge.pending{border-color:rgba(230,210,160,.5);color:var(--gold2)}
+    .badge.cancelled{border-color:rgba(225,141,127,.5);color:var(--err)}
+    select{background:#0d0e0b;border:1px solid var(--line);color:var(--text);padding:5px 8px;font-size:11px}
+    .empty{padding:50px;text-align:center;color:var(--muted);background:var(--card);border:1px dashed var(--line)}
+    footer{padding:22px 4vw;border-top:1px solid var(--line);color:rgba(255,255,255,.3);font-size:11px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    @media(max-width:700px){.stats{grid-template-columns:1fr}th,td{padding:9px 8px;font-size:11px}.hide-sm{display:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">GOOT <b>ADMIN</b></div>
+    <div class="actions">
+      <button class="btn" id="btn-refresh">تحديث ↻</button>
+      <a class="btn" href="/api/admin/export/customers.csv" id="exp-csv" download>تصدير العملاء CSV</a>
+      <a class="btn" href="/api/admin/export/bookings.csv" id="exp-csv2" download>تصدير الحجوزات CSV</a>
+      <a class="btn" href="/">← الموقع</a>
+      <button class="btn" id="btn-logout" style="display:none">خروج</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- LOGIN -->
+    <div class="login" id="login-view">
+      <h1>دخول الإدارة</h1>
+      <p>أدخل مفتاح الإدارة (ADMIN_KEY المحدد في ملف البيئة الخاص بالسيرفر) لعرض العملاء والحجوزات وتصدير ملفات Excel.</p>
+      <input type="password" id="key-input" placeholder="ADMIN_KEY" autocomplete="current-password">
+      <button class="btn primary" id="btn-login">دخول</button>
+      <div class="msg" id="login-msg"></div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dash-view" style="display:none">
+      <div class="stats">
+        <div class="stat"><b id="st-customers">—</b><small>عملاء مسجلون</small></div>
+        <div class="stat"><b id="st-bookings">—</b><small>إجمالي الحجوزات</small></div>
+        <div class="stat"><b id="st-pending">—</b><small>طلبات معلّقة</small></div>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-view="customers">العملاء</button>
+        <button class="tab" data-view="bookings">الحجوزات</button>
+      </div>
+      <div class="toolbar">
+        <input id="search" placeholder="بحث بالاسم أو البريد أو الهاتف…">
+      </div>
+      <div id="table-wrap"></div>
+      <div id="charts" class="chart-wrap">
+        <canvas id="chart-revenue"></canvas>
+        <p>إيرادات كل فيلا (SAR) مقابل الضيوف — معلّقة Stonesville /ـكم</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>GOOT Resorts — لوحة إدارة داخلية</span>
+    <span>الاتصال بالـ API: <b id="api-status">جارٍ الفحص…</b></span>
+  </footer>
+
+  <script src="js/admin.js" defer></script>
+</body>
+</html>
